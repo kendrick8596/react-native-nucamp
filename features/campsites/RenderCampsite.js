@@ -2,7 +2,6 @@ import { Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
 
 const RenderCampsite = ({ campsite }) => {
-
     if (campsite) {
         return (
             <Card containerStyle={{ padding: 0 }}>
@@ -24,9 +23,7 @@ const RenderCampsite = ({ campsite }) => {
             </Card>
         )
     }
-
     return <View />;
-
 }
 
 export default RenderCampsite;
