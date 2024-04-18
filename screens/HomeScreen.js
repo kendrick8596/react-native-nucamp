@@ -1,48 +1,44 @@
-//import { Text, View  } from "react-native-animatable";
-import { Card } from 'react-native-elements';
-import { useState } from 'react';
+import { Card } from "react-native-elements";
 import { ScrollView, Text, View } from "react-native";
-import { CAMPSITES } from '../shared/campsites';
-import { PARTNERS } from '../shared/expoV44partners';
-import { PROMOTIONS } from '../shared/expoV44promotions';
+import { useSelector } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
 
 const FeaturedItem = ({ item }) => {
-    if (item) { 
-        return (
-            <Card containerStyle={{ padding: 0 }}>
-                <Card.Image source={item.image}>
-                    <View style={{ justifyContent: 'center', flex: 1 }}>
-                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>
-                            {item.name}
-                        </Text>
-                    </View>
-                </Card.Image>
-                <Text style={{ margin: 20 }}>
-                    {item.description}
-                </Text>
-            </Card>
-        );
-    }
-    return <View />;
+  if (item) {
+    return (
+      <Card containerStyle={{ padding: 0 }}>
+        <Card.Image source={{ uri: baseUrl + item.image }}>
+          <View style={{ justifyContent: "center", flex: 1 }}>
+            <Text style={{ color: "white", textAlign: "center", fontSize: 20 }}>
+              {item.name}
+            </Text>
+          </View>
+        </Card.Image>
+        <Text style={{ margin: 20 }}>{item.description}</Text>
+      </Card>
+    );
+  }
+  return <View />;
 };
 
 const HomeScreen = () => {
-    const [campsites, setCampsites] = useState(CAMPSITES);
-    const [promotions, setPromotions] = useState(PROMOTIONS);
-    const [partners, setPartners] = useState(PARTNERS);
+  const campsites = useSelector((state) => state.campsites);
+  const promotions = useSelector((state) => state.promotions);
+  const partners = useSelector((state) => state.partners);
 
-    const featCampsite = campsites.find((item) => item.featured);
-    const featPromotion = promotions.find((item) => item.featured);
-    const featPartner = partners.find((item) => item.featured);
-    
-    return (
-        <ScrollView>
-            <FeaturedItem item={featCampsite} />
-            <FeaturedItem item={featPromotion} />
-            <FeaturedItem item={featPartner} />
-        </ScrollView>
-    );
+  const featCampsite = campsites.campsitesArray.find((item) => item.featured);
+  const featPromotion = promotions.promotionsArray.find(
+    (item) => item.featured
+  );
+  const featPartner = partners.partnersArray.find((item) => item.featured);
 
+  return (
+    <ScrollView>
+      <FeaturedItem item={featCampsite} />
+      <FeaturedItem item={featPromotion} />
+      <FeaturedItem item={featPartner} />
+    </ScrollView>
+  );
 };
 
 export default HomeScreen;
