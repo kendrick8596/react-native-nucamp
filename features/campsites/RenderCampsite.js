@@ -1,4 +1,11 @@
-import { Text, View, StyleSheet, PanResponder, Alert } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  PanResponder,
+  Alert,
+  Modal,
+} from "react-native";
 import { Card, Icon } from "react-native-elements";
 import { baseUrl } from "../../shared/baseUrl";
 import { useRef } from "react";
@@ -10,6 +17,7 @@ const RenderCampsite = (props) => {
   const view = useRef();
 
   const isLeftSwipe = ({ dx }) => dx < -200;
+  const isRightSwipe = ({ dx }) => dx > 200;
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -42,6 +50,11 @@ const RenderCampsite = (props) => {
           ],
           { cancelable: false }
         );
+      }
+      if (!isLeftSwipe) {
+        return false;
+      } else if (isRightSwipe(gestureState)) {
+        props.onShowModal();
       }
     },
   });
