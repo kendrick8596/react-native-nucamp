@@ -15,6 +15,7 @@ import ContactScreen from "./ContactScreen";
 import FavoritesScreen from "./FavoritesScreen";
 import logo from "../assets/images/logo.png";
 import ReservationScreen from "./ReservationScreen";
+import LoginScreen from "./LoginScreen";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPartners } from "../features/partners/partnersSlice";
@@ -147,6 +148,29 @@ const FavoritesNavigator = () => {
   );
 };
 
+const LoginNavigator = () => {
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Icon
+              name="sign-in"
+              type="font-awesome"
+              iconStyle={styles.stackIcon}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const DirectoryNavigator = () => {
   const Stack = createStackNavigator();
 
@@ -215,6 +239,21 @@ const Main = () => {
         drawerStyle={{ backgroundColor: "#CEC8FF" }}
         screenOptions={{ headerShown: false }}
       >
+        <Drawer.Screen
+          name="Login"
+          component={LoginNavigator}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="sign-in"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
+        />
         <Drawer.Screen
           name="Home"
           component={HomeNavigator}
