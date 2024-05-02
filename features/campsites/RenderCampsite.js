@@ -88,7 +88,7 @@ const RenderCampsite = (props) => {
             </View>
           </Card.Image>
           <Text style={{ margin: 2 }}>{campsite.description}</Text>
-          <View style={styles.carRow}>
+          <View style={styles.cardRow}>
             <Icon
               name={props.isFavorite ? "heart" : "heart-o"}
               type="font-awesome"
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     margin: 0,
     marginBottom: 20,
   },
-  carRow: {
+  cardRow: {
     alignItems: "center",
     justifyContent: "center",
     flex: 1,

@@ -1,4 +1,12 @@
-import { Image, Platform, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  ToastAndroid,
+} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
   createDrawerNavigator,
@@ -16,6 +24,7 @@ import FavoritesScreen from "./FavoritesScreen";
 import logo from "../assets/images/logo.png";
 import ReservationScreen from "./ReservationScreen";
 import LoginScreen from "./LoginScreen";
+import NetInfo from "@react-native-community/netinfo";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPartners } from "../features/partners/partnersSlice";
@@ -231,6 +240,17 @@ const Main = () => {
     dispatch(fetchPartners());
     dispatch(fetchComments());
   }, [dispatch]);
+
+  useEffect(() => {
+    NetInfo.fetch().then((connectionInfo) => {
+      Platform.OS === "ios"
+        ? Alert.alert("Initial Network Connectivity Type:", connectionInfo.type)
+        : ToastAndroid.show(
+            "Initial Network Connectivity Type: " + connectionInfo.type,
+            ToastAndroid.LONG
+          );
+    });
+  }, []);
 
   return (
     <View
